@@ -38,6 +38,16 @@ options:
 
 ```
 
+Install from RPM
+-------------------------
+There are rpm's available for fedora Workstation. Feel free to build your own package if you're using other OS.
+
+available at: https://github.com/rramirezacosta/diga/releases
+
+```console
+[user@localhost ~] $ sudo rpm -i diga-1.0.0-fc32.x86_64.rpm
+```
+
 
 
 
