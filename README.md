@@ -9,7 +9,7 @@ Usage
 For english:
 
 ```console
-[user@localhost ~] $ say "Say hello to my litle friend"
+[user@localhost ~] $ say "Say hello to my little friend"
 
 ```
 
@@ -47,6 +47,12 @@ available at: https://github.com/rramirezacosta/diga/releases
 ```console
 [user@localhost ~] $ sudo rpm -i diga-1.0.0-fc32.x86_64.rpm
 ```
+
+TODO
+-------------------------
+
+* Windows 10 support
+* Deb packages
 
 
 
