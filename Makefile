@@ -5,7 +5,11 @@ TAR_DIR = /tmp/$(APP_NAME)-$(VERSION)
 RPM_BUILDDIR = ~/rpmbuild
 
 CPP=g++
+WCPP=x86_64-w64-mingw32-g++
+W32CPP=i686-w64-mingw32-g++
+
 LFLAGS= -lspeechd
+WLFLAGS= -static-libgcc -static-libstdc++ -lsapi -lole32
 SRC=./src/main.cpp
 TAR_DIR = /tmp/$(APP_NAME)-$(VERSION)
 
@@ -14,10 +18,12 @@ all:
 	$(info )
 	$(info options:)
 	$(info )
-	$(info *     make binaries        -builds binaries)
-	$(info *     make local-install   -install diga for the current user on ~/.local/bin/ (no root required))
-	$(info *     make install         -install diga for all users (root required))
-	$(info *     make rpm             -creates a RPM package)
+	$(info *     make binaries        -builds binaries (linux))
+	$(info *     make wbinaries       -builds binaries (Windows 10))
+	$(info *     make local-install   -install diga for the current user on ~/.local/bin/ (linux))
+	$(info *     make install         -install diga for all users (linux, root required))
+	$(info *     make rpm             -creates a RPM package (linux))
+	$(info *     make win-installer   -creates a NSIS windows installer (Windows 10))
 	$(info )
 	$(info )
 
@@ -25,6 +31,11 @@ binaries:
 	mkdir -p ./bin
 	$(CPP) $(SRC) $(LFLAGS) -o ./bin/say
 	$(CPP) $(SRC) $(LFLAGS) -DLANG=es -o ./bin/diga
+
+wbinaries:
+	mkdir -p ./bin 
+	$(WCPP) $(SRC) $(WLFLAGS) -o ./bin/say
+
 
 local-install:
 	cp ./bin/say ~/.local/bin/
