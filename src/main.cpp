@@ -5,23 +5,11 @@
 #include <iostream>
 
 #if _WIN32 || _WIN64
-//WINDOWS INCLUDES
 #include <windows.h>
 #include <sapi.h>
 
-#else
-//LINUX INCLUDES
-#include <speech-dispatcher/libspeechd.h>
-#endif
-
-using namespace std;
-
-int say(string message)
+int say(std::string message)
 {
-
-#if _WIN32 || _WIN64
-   //WINDOWS CODE
-
    ISpVoice *pVoice = NULL;
 
    if (FAILED(::CoInitialize(NULL)))
@@ -30,8 +18,8 @@ int say(string message)
    HRESULT hr = CoCreateInstance(CLSID_SpVoice, NULL, CLSCTX_ALL, IID_ISpVoice, (void **)&pVoice);
    if (SUCCEEDED(hr))
    {
-      LPCWSTR lmessage = wstring(message.begin(),message.end()).c_str();
-      wcout << lmessage; // this string truncates at 8 chars on 32 bit windows
+      std::wstring wmessage = std::wstring(message.begin(), message.end());
+      LPCWSTR lmessage = wmessage.c_str();
       hr = pVoice->Speak(lmessage, 0, NULL);
       pVoice->Release();
       pVoice = NULL;
@@ -39,8 +27,15 @@ int say(string message)
 
    ::CoUninitialize();
 
+   return 0;
+}
+
 #else
-   //LINUX CODE
+
+#include <speech-dispatcher/libspeechd.h>
+
+int say(std::string message)
+{
 
    SPDConnection *conn;
 
@@ -58,14 +53,14 @@ int say(string message)
    /* Close connection */
    spd_close(conn);
 
-#endif
-
    return 0;
 }
 
+#endif
+
 int main(int argc, char **argv)
 {
-   string message;
+   std::string message;
 
    for (int i = 1; i < argc; i++)
    {
